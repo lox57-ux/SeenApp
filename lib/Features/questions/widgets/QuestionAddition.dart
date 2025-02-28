@@ -131,7 +131,7 @@ class QuestionAddition extends StatelessWidget {
                                   _themeController.isDarkMode.value
                                       ? SeenColors.iconColor
                                       : SeenColors.answerText,
-                                  15.sp)!
+                                  18.sp)!
                               .copyWith(
                             fontWeight: FontWeight.w400,
                             height: 1.5,

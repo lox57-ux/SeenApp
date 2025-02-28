@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:seen/Features/Splash/InitialNavigationController/SplachScreenController.dart';
 import 'package:seen/Features/Sections/controller/subjectController/SubjectController.dart';
+import 'package:seen/core/functions/ActiveCodeFunction.dart';
 import 'package:seen/core/functions/QuestionFunction.dart';
 import 'package:seen/Features/CodeManaging/Screens/CodeManagingScreen.dart';
 import 'package:seen/Features/NavigateToSubject/Screen/NavigateToSubjectScreen.dart';
@@ -22,6 +23,11 @@ import 'package:seen/core/settings/screens/PrivacyPolicy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
+import 'core/functions/localDataFunctions/ActiveCoupon.dart';
+import 'core/functions/localDataFunctions/CurrentSession.dart';
+import 'core/functions/localDataFunctions/SubjectFunctions.dart';
+import 'core/functions/localDataFunctions/SubsubjectsFunction.dart';
+import 'core/functions/localDataFunctions/indexedSubjectsFunction.dart';
 import 'shared/model/DataSource/BackgroundDataSource.dart';
 import 'shared/model/LocalDataSource.dart/LocalData.dart';
 import 'Features/introPages/controller/Auth/SignUpwithGoogle.dart';
@@ -50,9 +56,34 @@ void callbackDispatcher() {
   Workmanager().executeTask(
     (task, inputData) async {
       var pref = await SharedPreferences.getInstance();
-
       await SubjectLocalDataSource.instance.initializeDb();
       List? answers = await getAllUseranswer();
+      DateTime tempdate = DateTime.parse(
+          pref.getString('date_time') ?? DateTime.now().toString());
+      DateTime date1 = DateTime(tempdate.year, tempdate.month, tempdate.day,
+          tempdate.hour, tempdate.minute);
+      DateTime date2 = DateTime.now();
+      Duration difference = date2.difference(date1);
+      bool isvalid = difference.inDays.abs() < 7;
+      if (!isvalid) {
+        if (answers != null && answers.isNotEmpty) {
+          await BackgroundDataSource.instance
+              .submitAnswers(answers!)
+              .then((value) {});
+        } else {
+          await pref.remove('token');
+          await pref.remove('isFirstTime');
+          await deleteAllActiveCodes();
+          await deleteAllActiveCoupon();
+          await deleteAllSession();
+          await deleteAllIndexedSubjects();
+          await deleteAllSubjects();
+          await deleteAllSubSubjects();
+          await clearQuestionTable();
+        }
+        return Future.value(true);
+      }
+
       List? notes = await getUserNote();
       List? fav = await getAllFavoritesQuestionID();
 

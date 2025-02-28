@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:latext/latext.dart';
 import 'package:seen/core/controller/theme_controller.dart';
 import 'package:seen/core/constants/Colors.dart';
 import 'package:seen/core/constants/url.dart';
@@ -233,6 +234,7 @@ class QuestionWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
@@ -245,10 +247,13 @@ class QuestionWidget extends StatelessWidget {
                       },
                       child: SizedBox(
                         width: 235.w,
-                        child: Text(
-                            "${index + 1} - ${questionAnswerModel.questionContent}",
-                            style: ownStyle(Get.theme.primaryColor, 15.sp)!
-                                .copyWith(fontWeight: FontWeight.w700)),
+                        child: LaTexT(
+                          laTeXCode: Text(
+                              "${index + 1} - ${questionAnswerModel.questionContent}",
+                              textAlign: TextAlign.center,
+                              style: ownStyle(Get.theme.primaryColor, 15.sp)!
+                                  .copyWith(fontWeight: FontWeight.w700)),
+                        ),
                       ),
                     )),
                 SizedBox(
@@ -774,61 +779,55 @@ class QuestionWidget extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(
-                                            width: (answers[i].url == null ||
-                                                    answers[i].url!.isEmpty)
-                                                ? 230.w
-                                                : 150.w,
-                                            child: RichText(
-                                                maxLines: 500,
-                                                textAlign: TextAlign.start,
-                                                text: TextSpan(
-                                                    locale: Get.locale,
-                                                    style: ownStyle(
-                                                            correctAnswer ==
-                                                                    answers[i]
-                                                                        .id
-                                                                ? const Color
-                                                                    .fromARGB(
-                                                                    255,
-                                                                    67,
-                                                                    126,
-                                                                    65)
-                                                                : selectedAnswer ==
-                                                                        answers[i]
-                                                                            .id
-                                                                    ? const Color
-                                                                        .fromARGB(
-                                                                        255,
-                                                                        173,
-                                                                        56,
-                                                                        5120)
-                                                                    : questionAnswerModel.groupValue ==
-                                                                            answers[
-                                                                                    i]
-                                                                                .id!
-                                                                        ? Theme.of(context)
-                                                                            .primaryColor
-                                                                            .withOpacity(
-                                                                                0.8)
-                                                                        : _themeController
-                                                                                .isDarkMode.value
-                                                                            ? SeenColors
-                                                                                .iconColor
-                                                                            : SeenColors
-                                                                                .answerText,
-                                                            15.sp)!
-                                                        .copyWith(
-                                                            height: 1.6,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                    children: [
-                                                      TextSpan(
-                                                        text:
-                                                            "${answers[i].answerContent!}",
-                                                      ),
-                                                    ])),
-                                          ),
+                                              width: (answers[i].url == null ||
+                                                      answers[i].url!.isEmpty)
+                                                  ? 230.w
+                                                  : 150.w,
+                                              child: LaTexT(
+                                                laTeXCode: Text(
+                                                  "${answers[i].answerContent!}",
+                                                  locale: Get.locale,
+                                                  maxLines: 500,
+                                                  style: ownStyle(
+                                                          correctAnswer ==
+                                                                  answers[i].id
+                                                              ? const Color
+                                                                  .fromARGB(255,
+                                                                  67, 126, 65)
+                                                              : selectedAnswer ==
+                                                                      answers[
+                                                                              i]
+                                                                          .id
+                                                                  ? const Color
+                                                                      .fromARGB(
+                                                                      255,
+                                                                      173,
+                                                                      56,
+                                                                      5120)
+                                                                  : questionAnswerModel
+                                                                              .groupValue ==
+                                                                          answers[i]
+                                                                              .id!
+                                                                      ? Theme.of(
+                                                                              context)
+                                                                          .primaryColor
+                                                                          .withOpacity(
+                                                                              0.8)
+                                                                      : _themeController
+                                                                              .isDarkMode
+                                                                              .value
+                                                                          ? SeenColors
+                                                                              .iconColor
+                                                                          : SeenColors
+                                                                              .answerText,
+                                                          15.sp)!
+                                                      .copyWith(
+                                                          height: 1.6,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                              )),
                                         ]),
                                   ),
                                   (answers[i].url == null ||

@@ -5,6 +5,7 @@ import 'package:seen/Features/Sections/controller/subjectController/SubjectContr
 import 'package:seen/core/constants/Colors.dart';
 import 'package:seen/core/constants/TextStyles.dart';
 
+import '../../../Features/Sections/model/Data/SubjectDatatSource.dart';
 import '../../../shared/model/DataSource/BackgroundDataSource.dart';
 import '../../../Features/Sections/controller/subjectController/CustomOptionController.dart';
 import '../../../Features/questions/model/data/QuestionsDataSource.dart';
@@ -89,6 +90,8 @@ class CustomOption extends StatelessWidget {
                                         color: Colors.white,
                                         onPressed: () async {
                                           InvokeWaitingDialog(context);
+                                          await SubjectDataSource.instance
+                                              .get_AllSub_Subjects();
                                           await QuestionDataSource.instance
                                               .getAllUserQuestionsForSubject(
                                                   id);
@@ -104,6 +107,9 @@ class CustomOption extends StatelessWidget {
                                         color: Colors.white,
                                         onPressed: () async {
                                           InvokeWaitingDialog(context);
+
+                                          await SubjectDataSource.instance
+                                              .get_AllSub_Subjects();
                                           await QuestionDataSource.instance
                                               .getAllUserQuestionsForSubject(
                                                   id);

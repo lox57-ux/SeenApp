@@ -768,6 +768,7 @@ class MathQuestionScreen extends StatelessWidget {
                                                                             .mathIndex
                                                                             .value]!
                                                                         .questionContent!,
+                                                                    // '$text{$small M}',
                                                                     textAlign:
                                                                         TextAlign
                                                                             .start,
@@ -775,8 +776,8 @@ class MathQuestionScreen extends StatelessWidget {
                                                                         TextDirection
                                                                             .rtl,
                                                                     style: ownStyle(context.theme.primaryColor, 22.sp)!.copyWith(
-                                                                        height: 2.4
-                                                                            .h,
+                                                                        height:
+                                                                            2.h,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ))),

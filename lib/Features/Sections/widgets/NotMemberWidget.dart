@@ -154,11 +154,14 @@ class NotMemberScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: 280.w,
-                            height: 50.w,
+                            // width: 600.w,
+                            // height: 50.w,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                SizedBox(
+                                  width: 20.w,
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.all(6.0),
                                   child: FaIcon(
@@ -166,26 +169,33 @@ class NotMemberScreen extends StatelessWidget {
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ),
-                                TextButton(
-                                  child: Text(
-                                    'اضغط هنا لشراء كود عبر الواتساب',
-                                    style: ownStyle(
-                                            Theme.of(context).primaryColor,
-                                            11.sp)!
-                                        .copyWith(
-                                            decoration:
-                                                TextDecoration.underline),
-                                  ),
-                                  onPressed: () async {
-                                    Links? link = await getLink('whatsapp');
-                                    if (link != null) {
-                                      final Uri _url = Uri.parse(link.url!);
-                                      if (!await launchUrl(_url)) {
-                                        throw Exception(
-                                            'Could not launch $_url');
+                                Expanded(
+                                  child: TextButton(
+                                    child: SizedBox(
+                                      // width: 300.w,
+                                      child: Text(
+                                        'اضغط هنا لشراء كود عبر الواتساب',
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                        style: ownStyle(
+                                                Theme.of(context).primaryColor,
+                                                16.sp)!
+                                            .copyWith(
+                                                decoration:
+                                                    TextDecoration.underline),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      Links? link = await getLink('whatsapp');
+                                      if (link != null) {
+                                        final Uri _url = Uri.parse(link.url!);
+                                        if (!await launchUrl(_url)) {
+                                          throw Exception(
+                                              'Could not launch $_url');
+                                        }
                                       }
-                                    }
-                                  },
+                                    },
+                                  ),
                                 )
                               ],
                             ),
